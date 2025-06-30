@@ -1,0 +1,34 @@
+[
+  {
+    "id": "prov1",
+    "name": "Electrónica Global S.A.",
+    "contactPerson": "Carlos Gomez",
+    "email": "electronicaglobal.ventas@gmail.com",
+    "phone": "987654321",
+    "address": "Av. Principal 789, Ciudad Industrial, Lima"
+  },
+  {
+    "id": "prov2",
+    "name": "Suministros Textiles Ltda.",
+    "contactPerson": "Ana Diaz",
+    "email": "suministrostextiles.info@gmail.com",
+    "phone": "912345678",
+    "address": "Calle Textil 101, Zona Franca, Callao"
+  },
+  {
+    "id": "prov3",
+    "name": "Alimentos Frescos Perú",
+    "contactPerson": "Roberto Castro",
+    "email": "alimentosfrescos.contacto@gmail.com",
+    "phone": "999888777",
+    "address": "Mercado Central 50, La Victoria, Lima"
+  },
+  {
+    "id": "prov4",
+    "name": "Hogar Confort SAC",
+    "contactPerson": "Laura Montes",
+    "email": "hogarconfort.pedidos@gmail.com",
+    "phone": "977666555",
+    "address": "Calle Los Pinos 303, Surquillo, Lima"
+  }
+]

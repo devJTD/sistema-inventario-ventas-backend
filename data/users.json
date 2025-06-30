@@ -1,0 +1,26 @@
+[
+  {
+    "id": "user1",
+    "username": "admin",
+    "password": "admin123",
+    "role": "admin"
+  },
+  {
+    "id": "user2",
+    "username": "ventas.maria",
+    "password": "VentasMariaP3ru",
+    "role": "vendedor"
+  },
+  {
+    "id": "user3",
+    "username": "ventas.jose",
+    "password": "VentasJoseLima*",
+    "role": "vendedor"
+  },
+  {
+    "id": "user4",
+    "username": "almacen.supervisor",
+    "password": "AlmacenSeguro#1",
+    "role": "almacenista"
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "id": "sale1",
+    "date": "2025-07-01T10:30:00.000Z",
+    "clientId": "cli1",
+    "items": [
+      {
+        "productId": "prod1",
+        "name": "Laptop Ultrabook",
+        "quantity": 1,
+        "price": 1250.00
+      },
+      {
+        "productId": "prod3",
+        "name": "Mouse Óptico Inalámbrico",
+        "quantity": 2,
+        "price": 30.00
+      }
+    ],
+    "total": 1310.00
+  },
+  {
+    "id": "sale2",
+    "date": "2025-07-01T11:15:00.000Z",
+    "clientId": "cli4",
+    "items": [
+      {
+        "productId": "prod5",
+        "name": "Jean Slim Fit Mujer",
+        "quantity": 1,
+        "price": 70.00
+      },
+      {
+        "productId": "prod10",
+        "name": "Detergente Líquido (3L)",
+        "quantity": 1,
+        "price": 32.00
+      }
+    ],
+    "total": 102.00
+  }
+]
