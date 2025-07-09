@@ -2,7 +2,7 @@
   {
     "id": "prod1",
     "name": "Laptop Ultrabook",
-    "price": 1250.00,
+    "price": 1250,
     "stock": 15,
     "category": "Electrónica",
     "description": "Portátil de alto rendimiento para trabajo y estudio."
@@ -10,7 +10,7 @@
   {
     "id": "prod2",
     "name": "Auriculares Bluetooth",
-    "price": 85.50,
+    "price": 85.5,
     "stock": 40,
     "category": "Electrónica",
     "description": "Auriculares inalámbricos con cancelación de ruido."
@@ -18,7 +18,7 @@
   {
     "id": "prod3",
     "name": "Mouse Óptico Inalámbrico",
-    "price": 30.00,
+    "price": 30,
     "stock": 70,
     "category": "Electrónica",
     "description": "Ratón ergonómico con alta precisión."
@@ -26,7 +26,7 @@
   {
     "id": "prod4",
     "name": "Camisa Casual Hombre",
-    "price": 45.00,
+    "price": 45,
     "stock": 60,
     "category": "Ropa",
     "description": "Camisa de algodón 100% para uso diario."
@@ -34,7 +34,7 @@
   {
     "id": "prod5",
     "name": "Jean Slim Fit Mujer",
-    "price": 70.00,
+    "price": 70,
     "stock": 35,
     "category": "Ropa",
     "description": "Jean de mezclilla elástica, corte ajustado."
@@ -42,7 +42,7 @@
   {
     "id": "prod6",
     "name": "Zapatillas Deportivas",
-    "price": 110.00,
+    "price": 110,
     "stock": 25,
     "category": "Ropa",
     "description": "Calzado deportivo ligero y transpirable."
@@ -50,7 +50,7 @@
   {
     "id": "prod7",
     "name": "Arroz Extra Grano Largo (5kg)",
-    "price": 18.50,
+    "price": 18.5,
     "stock": 120,
     "category": "Alimentos",
     "description": "Arroz de alta calidad, ideal para todo tipo de comidas."
@@ -58,7 +58,7 @@
   {
     "id": "prod8",
     "name": "Leche Fresca Entera (1L)",
-    "price": 5.20,
+    "price": 5.2,
     "stock": 90,
     "category": "Alimentos",
     "description": "Leche pasteurizada y homogeneizada."
@@ -66,7 +66,7 @@
   {
     "id": "prod9",
     "name": "Pan de Molde Integral",
-    "price": 8.90,
+    "price": 8.9,
     "stock": 50,
     "category": "Alimentos",
     "description": "Pan suave con alto contenido de fibra."
@@ -74,7 +74,7 @@
   {
     "id": "prod10",
     "name": "Detergente Líquido (3L)",
-    "price": 32.00,
+    "price": 32,
     "stock": 30,
     "category": "Hogar",
     "description": "Detergente concentrado para ropa, con fragancia floral."
@@ -82,7 +82,7 @@
   {
     "id": "prod11",
     "name": "Escoba de Cerdas Suaves",
-    "price": 15.00,
+    "price": 15,
     "stock": 20,
     "category": "Hogar",
     "description": "Escoba ligera y eficiente para limpieza de interiores."
@@ -90,9 +90,25 @@
   {
     "id": "prod12",
     "name": "Bombilla LED E27 (9W)",
-    "price": 7.50,
+    "price": 7.5,
     "stock": 80,
     "category": "Hogar",
     "description": "Bombilla de bajo consumo, luz cálida."
+  },
+  {
+    "id": "prod13",
+    "name": "Papel Higienico",
+    "price": 10,
+    "stock": 50,
+    "category": "Hogar",
+    "description": "Papel Noble"
+  },
+  {
+    "id": "prod14",
+    "name": "abc",
+    "price": 50,
+    "stock": 80,
+    "category": "Electrónica",
+    "description": "abc"
   }
 ]
