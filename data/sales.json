@@ -8,16 +8,16 @@
         "productId": "prod1",
         "name": "Laptop Ultrabook",
         "quantity": 1,
-        "price": 1250.00
+        "price": 1250
       },
       {
         "productId": "prod3",
         "name": "Mouse Óptico Inalámbrico",
         "quantity": 2,
-        "price": 30.00
+        "price": 30
       }
     ],
-    "total": 1310.00
+    "total": 1310
   },
   {
     "id": "sale2",
@@ -28,15 +28,43 @@
         "productId": "prod5",
         "name": "Jean Slim Fit Mujer",
         "quantity": 1,
-        "price": 70.00
+        "price": 70
       },
       {
         "productId": "prod10",
         "name": "Detergente Líquido (3L)",
         "quantity": 1,
-        "price": 32.00
+        "price": 32
       }
     ],
-    "total": 102.00
+    "total": 102
+  },
+  {
+    "id": "sale3",
+    "date": "2025-07-11T22:15:51.843Z",
+    "clientId": "cli3",
+    "items": [
+      {
+        "productId": "prod10",
+        "name": "Detergente Líquido (3L)",
+        "quantity": 1,
+        "price": 32
+      }
+    ],
+    "total": 32
+  },
+  {
+    "id": "sale4",
+    "date": "2025-07-12T13:06:46.941Z",
+    "clientId": "cli6",
+    "items": [
+      {
+        "productId": "prod13",
+        "name": "Papel Higienico",
+        "quantity": 3,
+        "price": 10
+      }
+    ],
+    "total": 30
   }
 ]

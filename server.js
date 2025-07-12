@@ -4,21 +4,24 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const fs = require('fs');
 const path = require('path');
-const jwt = require('jsonwebtoken'); 
+const jwt = require('jsonwebtoken');
 
+/* Configuración Inicial */
 dotenv.config();
-
 const JWT_SECRET = process.env.JWT_SECRET || 'mi_secreto_super_seguro_para_jwt';
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+/* Middlewares Globales */
 app.use(cors({
   origin: 'http://localhost:5173'
 }));
 app.use(express.json());
 
+/* Configuración de Archivos de Datos */
 const dataPath = path.join(__dirname, 'data');
 
+/* Funciones de Utilidad para Archivos JSON */
 const readJSONFile = (filename) => {
   try {
     const filePath = path.join(dataPath, filename);
@@ -43,404 +46,377 @@ const writeJSONFile = (filename, data) => {
   }
 };
 
+/* Ruta Raíz */
 app.get('/', (req, res) => {
   res.send('¡Servidor Express con archivos JSON funcionando!');
 });
 
-// --- Middleware para verificar JWT ---
+/* Middleware de Autenticación JWT */
 const authenticateToken = (req, res, next) => {
-    // Obtener el header de autorización
-    const authHeader = req.headers['authorization'];
-    // El formato es "Bearer TOKEN_AQUI"
-    const token = authHeader && authHeader.split(' ')[1];
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
 
-    if (token == null) {
-        // Si no hay token, no autorizado
-        return res.status(401).json({ message: 'Acceso denegado. No se proporcionó token.' });
+  if (token == null) {
+    return res.status(401).json({ message: 'Acceso denegado. No se proporcionó token.' });
+  }
+
+  jwt.verify(token, JWT_SECRET, (err, user) => {
+    if (err) {
+      console.error("Token de verificación fallido:", err.message);
+      return res.status(403).json({ message: 'Token inválido o expirado.' });
     }
-
-    jwt.verify(token, JWT_SECRET, (err, user) => {
-        if (err) {
-            // Si el token no es válido o expiró
-            console.error("Token de verificación fallido:", err.message);
-            return res.status(403).json({ message: 'Token inválido o expirado.' }); // Prohibido
-        }
-        req.user = user; // Guarda el payload del token (ej. id, username, role) en req.user
-        next(); // Continúa a la siguiente función middleware/ruta
-    });
+    req.user = user;
+    next();
+  });
 };
 
-
-// --- Autenticación (Login) - AHORA USA EL ÚNICO users.json ---
-// --- Autenticación (Login) - AHORA USA EL ÚNICO users.json ---
+/* Rutas de Autenticación */
 app.post('/api/login', (req, res) => {
-    const { username, password } = req.body;
-    const users = readJSONFile('users.json');
+  const { username, password } = req.body;
+  const users = readJSONFile('users.json');
 
-    const user = users.find(u => u.username === username && u.password === password);
+  const user = users.find(u => u.username === username && u.password === password);
 
-    if (user) {
-        // ¡Aquí generamos el JWT!
-        // El payload del token (lo que se "guarda" dentro del token)
-        const userPayload = { id: user.id, username: user.username, role: user.role };
-        // Firmamos el token. Puedes añadir una fecha de expiración (ej. { expiresIn: '1h' })
-        const accessToken = jwt.sign(userPayload, JWT_SECRET, { expiresIn: '1h' }); // Token expira en 1 hora
+  if (user) {
+    const userPayload = { id: user.id, username: user.username, role: user.role };
+    const accessToken = jwt.sign(userPayload, JWT_SECRET, { expiresIn: '1h' });
 
-        // Enviamos el token al cliente, junto con los datos del usuario
-        res.status(200).json({
-            message: 'Login exitoso',
-            token: accessToken, // <-- ¡Aquí enviamos el token!
-            user: { id: user.id, username: user.username, role: user.role }
-        });
-    } else {
-        res.status(401).json({ message: 'Credenciales inválidas' });
-    }
+    res.status(200).json({
+      message: 'Login exitoso',
+      token: accessToken,
+      user: { id: user.id, username: user.username, role: user.role }
+    });
+  } else {
+    res.status(401).json({ message: 'Credenciales inválidas' });
+  }
 });
-// --- NUEVA RUTA PARA VERIFICAR EL TOKEN (OPCIONAL PERO RECOMENDADA) ---
-// El frontend la usará al cargar una nueva pestaña para validar el token
+
+/* Ruta para Verificar Token */
 app.get('/api/verify-token', authenticateToken, (req, res) => {
-    // Si llegamos aquí, el token es válido y `req.user` contiene el payload del token.
-    res.status(200).json({ message: 'Token válido', user: req.user });
+  res.status(200).json({ message: 'Token válido', user: req.user });
 });
 
-// --- Proteger tus rutas API existentes ---
-// Todas las rutas que requieren que el usuario esté logueado deben usar `authenticateToken`
-
-// app.get('/api/products', authenticateToken, (req, res) => { // Ejemplo de cómo proteger
-//     const products = readJSONFile('products.json');
-//     res.status(200).json(products);
-// });
-// ... y así sucesivamente con todas tus rutas de clientes, proveedores, ventas, users_management ...
-// Puedes decidir cuáles proteger y cuáles no. Generalmente, todas las de CRUD deberían estar protegidas.
-
-// --- Rutas de Productos (AHORA CON PROTECCIÓN) ---
-app.get('/api/products', authenticateToken, (req, res) => { // Protegida
-    const products = readJSONFile('products.json');
-    res.status(200).json(products);
+/* Rutas de Productos */
+app.get('/api/products', authenticateToken, (req, res) => {
+  const products = readJSONFile('products.json');
+  res.status(200).json(products);
 });
 
-app.get('/api/products/:id', authenticateToken, (req, res) => { // Protegida
-    const products = readJSONFile('products.json');
-    const product = products.find(p => p.id === req.params.id);
-    if (product) {
-        res.status(200).json(product);
-    } else {
-        res.status(404).json({ message: 'Producto no encontrado' });
-    }
+app.get('/api/products/:id', authenticateToken, (req, res) => {
+  const products = readJSONFile('products.json');
+  const product = products.find(p => p.id === req.params.id);
+  if (product) {
+    res.status(200).json(product);
+  } else {
+    res.status(404).json({ message: 'Producto no encontrado' });
+  }
 });
 
-app.post('/api/products', authenticateToken, (req, res) => { // Protegida
-    const products = readJSONFile('products.json');
-    const newProductData = req.body;
-    const newId = `prod${products.length > 0 ? Math.max(...products.map(p => parseInt(p.id.replace('prod', '')))) + 1 : 1}`;
-    const newProduct = {
-        id: newId,
-        ...newProductData
-    };
-    products.push(newProduct);
+app.post('/api/products', authenticateToken, (req, res) => {
+  const products = readJSONFile('products.json');
+  const newProductData = req.body;
+  const newId = `prod${products.length > 0 ? Math.max(...products.map(p => parseInt(p.id.replace('prod', '')))) + 1 : 1}`;
+  const newProduct = {
+    id: newId,
+    ...newProductData
+  };
+  products.push(newProduct);
+  writeJSONFile('products.json', products);
+  res.status(201).json(newProduct);
+});
+
+app.put('/api/products/:id', authenticateToken, (req, res) => {
+  let products = readJSONFile('products.json');
+  const productId = req.params.id;
+  const updatedProductData = req.body;
+
+  const productIndex = products.findIndex(p => p.id === productId);
+
+  if (productIndex !== -1) {
+    products[productIndex] = { ...products[productIndex], ...updatedProductData };
     writeJSONFile('products.json', products);
-    res.status(201).json(newProduct);
+    res.status(200).json(products[productIndex]);
+  } else {
+    res.status(404).json({ message: 'Producto no encontrado para actualizar' });
+  }
 });
 
-app.put('/api/products/:id', authenticateToken, (req, res) => { // Protegida
-    let products = readJSONFile('products.json');
-    const productId = req.params.id;
-    const updatedProductData = req.body;
+app.delete('/api/products/:id', authenticateToken, (req, res) => {
+  let products = readJSONFile('products.json');
+  const initialLength = products.length;
+  products = products.filter(p => p.id !== req.params.id);
 
-    const productIndex = products.findIndex(p => p.id === productId);
-
-    if (productIndex !== -1) {
-        products[productIndex] = { ...products[productIndex], ...updatedProductData };
-        writeJSONFile('products.json', products);
-        res.status(200).json(products[productIndex]);
-    } else {
-        res.status(404).json({ message: 'Producto no encontrado para actualizar' });
-    }
+  if (products.length < initialLength) {
+    writeJSONFile('products.json', products);
+    res.status(204).send();
+  } else {
+    res.status(404).json({ message: 'Producto no encontrado para eliminar' });
+  }
 });
 
-app.delete('/api/products/:id', authenticateToken, (req, res) => { // Protegida
-    let products = readJSONFile('products.json');
-    const initialLength = products.length;
-    products = products.filter(p => p.id !== req.params.id);
-
-    if (products.length < initialLength) {
-        writeJSONFile('products.json', products);
-        res.status(204).send();
-    } else {
-        res.status(404).json({ message: 'Producto no encontrado para eliminar' });
-    }
-});
-
-// --- Rutas de Clientes (con protección) ---
+/* Rutas de Clientes */
 app.get('/api/clients', authenticateToken, (req, res) => {
-    const clients = readJSONFile('clients.json');
-    res.status(200).json(clients);
+  const clients = readJSONFile('clients.json');
+  res.status(200).json(clients);
 });
 
 app.get('/api/clients/:id', authenticateToken, (req, res) => {
-    const clients = readJSONFile('clients.json');
-    const client = clients.find(c => c.id === req.params.id);
-    if (client) {
-        res.status(200).json(client);
-    } else {
-        res.status(404).json({ message: 'Cliente no encontrado' });
-    }
+  const clients = readJSONFile('clients.json');
+  const client = clients.find(c => c.id === req.params.id);
+  if (client) {
+    res.status(200).json(client);
+  } else {
+    res.status(404).json({ message: 'Cliente no encontrado' });
+  }
 });
 
 app.post('/api/clients', authenticateToken, (req, res) => {
-    const clients = readJSONFile('clients.json');
-    const newClientData = req.body;
-    const newId = `cli${clients.length > 0 ? Math.max(...clients.map(c => parseInt(c.id.replace('cli', '')))) + 1 : 1}`;
-    const newClient = {
-        id: newId,
-        ...newClientData
-    };
-    clients.push(newClient);
-    writeJSONFile('clients.json', clients);
-    res.status(201).json(newClient);
+  const clients = readJSONFile('clients.json');
+  const newClientData = req.body;
+  const newId = `cli${clients.length > 0 ? Math.max(...clients.map(c => parseInt(c.id.replace('cli', '')))) + 1 : 1}`;
+  const newClient = {
+    id: newId,
+    ...newClientData
+  };
+  clients.push(newClient);
+  writeJSONFile('clients.json', clients);
+  res.status(201).json(newClient);
 });
 
 app.put('/api/clients/:id', authenticateToken, (req, res) => {
-    let clients = readJSONFile('clients.json');
-    const clientId = req.params.id;
-    const updatedClientData = req.body;
+  let clients = readJSONFile('clients.json');
+  const clientId = req.params.id;
+  const updatedClientData = req.body;
 
-    const clientIndex = clients.findIndex(c => c.id === clientId);
+  const clientIndex = clients.findIndex(c => c.id === clientId);
 
-    if (clientIndex !== -1) {
-        clients[clientIndex] = { ...clients[clientIndex], ...updatedClientData };
-        writeJSONFile('clients.json', clients);
-        res.status(200).json(clients[clientIndex]);
-    } else {
-        res.status(404).json({ message: 'Cliente no encontrado para actualizar' });
-    }
+  if (clientIndex !== -1) {
+    clients[clientIndex] = { ...clients[clientIndex], ...updatedClientData };
+    writeJSONFile('clients.json', clients);
+    res.status(200).json(clients[clientIndex]);
+  } else {
+    res.status(404).json({ message: 'Cliente no encontrado para actualizar' });
+  }
 });
 
 app.delete('/api/clients/:id', authenticateToken, (req, res) => {
-    let clients = readJSONFile('clients.json');
-    const initialLength = clients.length;
-    clients = clients.filter(c => c.id !== req.params.id);
+  let clients = readJSONFile('clients.json');
+  const initialLength = clients.length;
+  clients = clients.filter(c => c.id !== req.params.id);
 
-    if (clients.length < initialLength) {
-        writeJSONFile('clients.json', clients);
-        res.status(204).send();
-    } else {
-        res.status(404).json({ message: 'Cliente no encontrado para eliminar' });
-    }
+  if (clients.length < initialLength) {
+    writeJSONFile('clients.json', clients);
+    res.status(204).send();
+  } else {
+    res.status(404).json({ message: 'Cliente no encontrado para eliminar' });
+  }
 });
 
-// --- Rutas de Proveedores (con protección) ---
+/* Rutas de Proveedores */
 app.get('/api/providers', authenticateToken, (req, res) => {
-    const providers = readJSONFile('providers.json');
-    res.status(200).json(providers);
+  const providers = readJSONFile('providers.json');
+  res.status(200).json(providers);
 });
 
 app.get('/api/providers/:id', authenticateToken, (req, res) => {
-    const providers = readJSONFile('providers.json');
-    const provider = providers.find(p => p.id === req.params.id);
-    if (provider) {
-        res.status(200).json(provider);
-    } else {
-        res.status(404).json({ message: 'Proveedor no encontrado' });
-    }
+  const providers = readJSONFile('providers.json');
+  const provider = providers.find(p => p.id === req.params.id);
+  if (provider) {
+    res.status(200).json(provider);
+  } else {
+    res.status(404).json({ message: 'Proveedor no encontrado' });
+  }
 });
 
 app.post('/api/providers', authenticateToken, (req, res) => {
-    const providers = readJSONFile('providers.json');
-    const newProviderData = req.body;
-    const newId = `prov${providers.length > 0 ? Math.max(...providers.map(p => parseInt(p.id.replace('prov', '')))) + 1 : 1}`;
-    const newProvider = {
-        id: newId,
-        ...newProviderData
-    };
-    providers.push(newProvider);
-    writeJSONFile('providers.json', providers);
-    res.status(201).json(newProvider);
+  const providers = readJSONFile('providers.json');
+  const newProviderData = req.body;
+  const newId = `prov${providers.length > 0 ? Math.max(...providers.map(p => parseInt(p.id.replace('prov', '')))) + 1 : 1}`;
+  const newProvider = {
+    id: newId,
+    ...newProviderData
+  };
+  providers.push(newProvider);
+  writeJSONFile('providers.json', providers);
+  res.status(201).json(newProvider);
 });
 
 app.put('/api/providers/:id', authenticateToken, (req, res) => {
-    let providers = readJSONFile('providers.json');
-    const providerId = req.params.id;
-    const updatedProviderData = req.body;
+  let providers = readJSONFile('providers.json');
+  const providerId = req.params.id;
+  const updatedProviderData = req.body;
 
-    const providerIndex = providers.findIndex(p => p.id === providerId);
+  const providerIndex = providers.findIndex(p => p.id === providerId);
 
-    if (providerIndex !== -1) {
-        providers[providerIndex] = { ...providers[providerIndex], ...updatedProviderData };
-        writeJSONFile('providers.json', providers);
-        res.status(200).json(providers[providerIndex]);
-    } else {
-        res.status(404).json({ message: 'Proveedor no encontrado para actualizar' });
-    }
+  if (providerIndex !== -1) {
+    providers[providerIndex] = { ...providers[providerIndex], ...updatedProviderData };
+    writeJSONFile('providers.json', providers);
+    res.status(200).json(providers[providerIndex]);
+  } else {
+    res.status(404).json({ message: 'Proveedor no encontrado para actualizar' });
+  }
 });
 
 app.delete('/api/providers/:id', authenticateToken, (req, res) => {
-    let providers = readJSONFile('providers.json');
-    const initialLength = providers.length;
-    providers = providers.filter(p => p.id !== req.params.id);
+  let providers = readJSONFile('providers.json');
+  const initialLength = providers.length;
+  providers = providers.filter(p => p.id !== req.params.id);
 
-    if (providers.length < initialLength) {
-        writeJSONFile('providers.json', providers);
-        res.status(204).send();
-    } else {
-        res.status(404).json({ message: 'Proveedor no encontrado para eliminar' });
-    }
+  if (providers.length < initialLength) {
+    writeJSONFile('providers.json', providers);
+    res.status(204).send();
+  } else {
+    res.status(404).json({ message: 'Proveedor no encontrado para eliminar' });
+  }
 });
 
-// --- Rutas de Ventas (con protección) ---
+/* Rutas de Ventas */
 app.get('/api/sales', authenticateToken, (req, res) => {
-    const sales = readJSONFile('sales.json');
-    res.status(200).json(sales);
+  const sales = readJSONFile('sales.json');
+  res.status(200).json(sales);
 });
 
 app.post('/api/sales', authenticateToken, (req, res) => {
-    let sales = readJSONFile('sales.json');
-    let products = readJSONFile('products.json');
-    const newSaleData = req.body;
+  let sales = readJSONFile('sales.json');
+  let products = readJSONFile('products.json');
+  const newSaleData = req.body;
 
-    if (!newSaleData.clientId || !newSaleData.items || newSaleData.items.length === 0) {
-        return res.status(400).json({ message: 'Datos de venta incompletos.' });
+  if (!newSaleData.clientId || !newSaleData.items || newSaleData.items.length === 0) {
+    return res.status(400).json({ message: 'Datos de venta incompletos.' });
+  }
+
+  let totalSale = 0;
+  const itemsSold = [];
+  const errors = [];
+
+  for (const item of newSaleData.items) {
+    const productIndex = products.findIndex(p => p.id === item.productId);
+
+    if (productIndex === -1) {
+      errors.push(`Producto con ID ${item.productId} no encontrado.`);
+      continue;
     }
 
-    let totalSale = 0;
-    const itemsSold = [];
-    const errors = [];
+    const product = products[productIndex];
 
-    for (const item of newSaleData.items) {
-        const productIndex = products.findIndex(p => p.id === item.productId);
-
-        if (productIndex === -1) {
-            errors.push(`Producto con ID ${item.productId} no encontrado.`);
-            continue;
-        }
-
-        const product = products[productIndex];
-
-        if (product.stock < item.quantity) {
-            errors.push(`Stock insuficiente para el producto ${product.name} (ID: ${product.id}). Disponible: ${product.stock}, Solicitado: ${item.quantity}`);
-            continue;
-        }
-
-        product.stock -= item.quantity;
-        totalSale += product.price * item.quantity;
-
-        itemsSold.push({
-            productId: product.id,
-            name: product.name,
-            quantity: item.quantity,
-            price: product.price
-        });
+    if (product.stock < item.quantity) {
+      errors.push(`Stock insuficiente para el producto ${product.name} (ID: ${product.id}). Disponible: ${product.stock}, Solicitado: ${item.quantity}`);
+      continue;
     }
 
-    if (errors.length > 0) {
-        return res.status(400).json({ message: 'Errores en la venta:', details: errors });
-    }
+    product.stock -= item.quantity;
+    totalSale += product.price * item.quantity;
 
-    const newId = `sale${sales.length > 0 ? Math.max(...sales.map(s => parseInt(s.id.replace('sale', '')))) + 1 : 1}`;
-    const newSale = {
-        id: newId,
-        date: new Date().toISOString(),
-        clientId: newSaleData.clientId,
-        items: itemsSold,
-        total: parseFloat(totalSale.toFixed(2))
-    };
+    itemsSold.push({
+      productId: product.id,
+      name: product.name,
+      quantity: item.quantity,
+      price: product.price
+    });
+  }
 
-    sales.push(newSale);
-    writeJSONFile('sales.json', sales);
-    writeJSONFile('products.json', products);
+  if (errors.length > 0) {
+    return res.status(400).json({ message: 'Errores en la venta:', details: errors });
+  }
 
-    res.status(201).json(newSale);
+  const newId = `sale${sales.length > 0 ? Math.max(...sales.map(s => parseInt(s.id.replace('sale', '')))) + 1 : 1}`;
+  const newSale = {
+    id: newId,
+    date: new Date().toISOString(),
+    clientId: newSaleData.clientId,
+    items: itemsSold,
+    total: parseFloat(totalSale.toFixed(2))
+  };
+
+  sales.push(newSale);
+  writeJSONFile('sales.json', sales);
+  writeJSONFile('products.json', products);
+
+  res.status(201).json(newSale);
 });
 
-// --- Rutas de Gestión de Usuarios (con protección) ---
-
-// Obtener todos los usuarios
+/* Rutas de Gestión de Usuarios */
 app.get('/api/users_management', authenticateToken, (req, res) => {
-    const users = readJSONFile('users.json');
-    // Asegúrate de no enviar la contraseña en la respuesta
-    res.status(200).json(users.map(u => ({ id: u.id, username: u.username, role: u.role })));
+  const users = readJSONFile('users.json');
+  res.status(200).json(users.map(u => ({ id: u.id, username: u.username, role: u.role })));
 });
 
-// Obtener un usuario por ID
 app.get('/api/users_management/:id', authenticateToken, (req, res) => {
-    const users = readJSONFile('users.json');
-    const user = users.find(u => u.id === req.params.id);
-    if (user) {
-        res.status(200).json({ id: user.id, username: user.username, role: user.role });
-    } else {
-        res.status(404).json({ message: 'Usuario no encontrado' });
-    }
+  const users = readJSONFile('users.json');
+  const user = users.find(u => u.id === req.params.id);
+  if (user) {
+    res.status(200).json({ id: user.id, username: user.username, role: user.role });
+  } else {
+    res.status(404).json({ message: 'Usuario no encontrado' });
+  }
 });
 
-// Crear un nuevo usuario
 app.post('/api/users_management', authenticateToken, (req, res) => {
-    const users = readJSONFile('users.json');
-    const { username, password, role } = req.body;
+  const users = readJSONFile('users.json');
+  const { username, password, role } = req.body;
 
-    if (!username || !password || !role) {
-        return res.status(400).json({ message: 'Usuario, contraseña y rol son obligatorios.' });
-    }
-    if (users.some(u => u.username === username)) {
-        return res.status(400).json({ message: 'El nombre de usuario ya existe.' });
-    }
+  if (!username || !password || !role) {
+    return res.status(400).json({ message: 'Usuario, contraseña y rol son obligatorios.' });
+  }
+  if (users.some(u => u.username === username)) {
+    return res.status(400).json({ message: 'El nombre de usuario ya existe.' });
+  }
 
-    const newId = `user${users.length > 0 ? Math.max(...users.map(u => parseInt(u.id.replace('user', '')))) + 1 : 1}`;
-    const newUser = {
-        id: newId,
-        username,
-        password,
-        role
-    };
-    users.push(newUser);
-    writeJSONFile('users.json', users);
-    res.status(201).json({ id: newUser.id, username: newUser.username, role: newUser.role });
+  const newId = `user${users.length > 0 ? Math.max(...users.map(u => parseInt(u.id.replace('user', '')))) + 1 : 1}`;
+  const newUser = {
+    id: newId,
+    username,
+    password,
+    role
+  };
+  users.push(newUser);
+  writeJSONFile('users.json', users);
+  res.status(201).json({ id: newUser.id, username: newUser.username, role: newUser.role });
 });
 
-// Actualizar un usuario
 app.put('/api/users_management/:id', authenticateToken, (req, res) => {
-    let users = readJSONFile('users.json');
-    const userId = req.params.id;
-    const { username, password, role } = req.body;
+  let users = readJSONFile('users.json');
+  const userId = req.params.id;
+  const { username, password, role } = req.body;
 
-    const userIndex = users.findIndex(u => u.id === userId);
+  const userIndex = users.findIndex(u => u.id === userId);
 
-    if (userIndex !== -1) {
-        if (username && users.some((u, i) => u.username === username && i !== userIndex)) {
-            return res.status(400).json({ message: 'El nombre de usuario ya existe para otro usuario.' });
-        }
-
-        if (username) users[userIndex].username = username;
-        if (password) users[userIndex].password = password;
-        if (role) users[userIndex].role = role;
-
-        writeJSONFile('users.json', users);
-        res.status(200).json({ id: users[userIndex].id, username: users[userIndex].username, role: users[userIndex].role });
-    } else {
-        res.status(404).json({ message: 'Usuario no encontrado para actualizar' });
+  if (userIndex !== -1) {
+    if (username && users.some((u, i) => u.username === username && i !== userIndex)) {
+      return res.status(400).json({ message: 'El nombre de usuario ya existe para otro usuario.' });
     }
+
+    if (username) users[userIndex].username = username;
+    if (password) users[userIndex].password = password;
+    if (role) users[userIndex].role = role;
+
+    writeJSONFile('users.json', users);
+    res.status(200).json({ id: users[userIndex].id, username: users[userIndex].username, role: users[userIndex].role });
+  } else {
+    res.status(404).json({ message: 'Usuario no encontrado para actualizar' });
+  }
 });
 
-// Eliminar un usuario
 app.delete('/api/users_management/:id', authenticateToken, (req, res) => {
-    let users = readJSONFile('users.json');
-    const userId = req.params.id;
+  let users = readJSONFile('users.json');
+  const userId = req.params.id;
 
-    if (userId === 'user1') {
-        return res.status(403).json({ message: 'No se puede eliminar el usuario administrador principal.' });
-    }
+  if (userId === 'user1') {
+    return res.status(403).json({ message: 'No se puede eliminar el usuario administrador principal.' });
+  }
 
-    const initialLength = users.length;
-    users = users.filter(u => u.id !== userId);
+  const initialLength = users.length;
+  users = users.filter(u => u.id !== userId);
 
-    if (users.length < initialLength) {
-        writeJSONFile('users.json', users);
-        res.status(204).send();
-    } else {
-        res.status(404).json({ message: 'Usuario no encontrado para eliminar' });
-    }
+  if (users.length < initialLength) {
+    writeJSONFile('users.json', users);
+    res.status(204).send();
+  } else {
+    res.status(404).json({ message: 'Usuario no encontrado para eliminar' });
+  }
 });
 
-// --- Iniciar el servidor ---
+/* Inicio del Servidor */
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });

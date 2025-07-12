@@ -75,7 +75,7 @@
     "id": "prod10",
     "name": "Detergente Líquido (3L)",
     "price": 32,
-    "stock": 30,
+    "stock": 29,
     "category": "Hogar",
     "description": "Detergente concentrado para ropa, con fragancia floral."
   },
@@ -99,7 +99,7 @@
     "id": "prod13",
     "name": "Papel Higienico",
     "price": 10,
-    "stock": 50,
+    "stock": 47,
     "category": "Hogar",
     "description": "Papel Noble"
   },
@@ -110,5 +110,13 @@
     "stock": 80,
     "category": "Electrónica",
     "description": "abc"
+  },
+  {
+    "id": "prod15",
+    "name": "ProductoNuevo15",
+    "price": 50,
+    "stock": 26,
+    "category": "Electrónica",
+    "description": "Prueba Actualizacion ventana"
   }
 ]

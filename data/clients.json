@@ -33,5 +33,12 @@
     "email": "ana.torres@example.com",
     "phone": "945-678-9012",
     "address": "Jr. Cusco 202, Cercado de Lima, Lima, Perú"
+  },
+  {
+    "id": "cli6",
+    "name": "Ariana Dávila",
+    "email": "arianaD@gmail.com",
+    "phone": "921340064",
+    "address": "abc calle los florales"
   }
 ]
