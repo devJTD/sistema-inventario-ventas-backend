@@ -10,7 +10,7 @@ const jwt = require('jsonwebtoken');
 dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET || 'mi_secreto_super_seguro_para_jwt';
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3002;
 
 /* Middlewares Globales */
 app.use(cors({
