@@ -4,7 +4,7 @@
     "name": "Laptop Ultrabook",
     "price": 1250,
     "stock": 15,
-    "category": "Electrónica",
+    "categoryId": "cat1",
     "description": "Portátil de alto rendimiento para trabajo y estudio."
   },
   {
@@ -12,7 +12,7 @@
     "name": "Auriculares Bluetooth",
     "price": 85.5,
     "stock": 40,
-    "category": "Electrónica",
+    "categoryId": "cat1",
     "description": "Auriculares inalámbricos con cancelación de ruido."
   },
   {
@@ -20,7 +20,7 @@
     "name": "Mouse Óptico Inalámbrico",
     "price": 30,
     "stock": 70,
-    "category": "Electrónica",
+    "categoryId": "cat1",
     "description": "Ratón ergonómico con alta precisión."
   },
   {
@@ -28,7 +28,7 @@
     "name": "Camisa Casual Hombre",
     "price": 45,
     "stock": 60,
-    "category": "Ropa",
+    "categoryId": "cat2",
     "description": "Camisa de algodón 100% para uso diario."
   },
   {
@@ -36,7 +36,7 @@
     "name": "Jean Slim Fit Mujer",
     "price": 70,
     "stock": 35,
-    "category": "Ropa",
+    "categoryId": "cat2",
     "description": "Jean de mezclilla elástica, corte ajustado."
   },
   {
@@ -44,7 +44,7 @@
     "name": "Zapatillas Deportivas",
     "price": 110,
     "stock": 25,
-    "category": "Ropa",
+    "categoryId": "cat2",
     "description": "Calzado deportivo ligero y transpirable."
   },
   {
@@ -52,7 +52,7 @@
     "name": "Arroz Extra Grano Largo (5kg)",
     "price": 18.5,
     "stock": 120,
-    "category": "Alimentos",
+    "categoryId": "cat3",
     "description": "Arroz de alta calidad, ideal para todo tipo de comidas."
   },
   {
@@ -60,7 +60,7 @@
     "name": "Leche Fresca Entera (1L)",
     "price": 5.2,
     "stock": 90,
-    "category": "Alimentos",
+    "categoryId": "cat3",
     "description": "Leche pasteurizada y homogeneizada."
   },
   {
@@ -68,7 +68,7 @@
     "name": "Pan de Molde Integral",
     "price": 8.9,
     "stock": 50,
-    "category": "Alimentos",
+    "categoryId": "cat3",
     "description": "Pan suave con alto contenido de fibra."
   },
   {
@@ -76,7 +76,7 @@
     "name": "Detergente Líquido (3L)",
     "price": 32,
     "stock": 29,
-    "category": "Hogar",
+    "categoryId": "cat4",
     "description": "Detergente concentrado para ropa, con fragancia floral."
   },
   {
@@ -84,7 +84,7 @@
     "name": "Escoba de Cerdas Suaves",
     "price": 15,
     "stock": 20,
-    "category": "Hogar",
+    "categoryId": "cat4",
     "description": "Escoba ligera y eficiente para limpieza de interiores."
   },
   {
@@ -92,7 +92,7 @@
     "name": "Bombilla LED E27 (9W)",
     "price": 7.5,
     "stock": 80,
-    "category": "Hogar",
+    "categoryId": "cat4",
     "description": "Bombilla de bajo consumo, luz cálida."
   },
   {
@@ -100,7 +100,7 @@
     "name": "Papel Higienico",
     "price": 10,
     "stock": 47,
-    "category": "Hogar",
+    "categoryId": "cat4",
     "description": "Papel Noble"
   },
   {
@@ -108,7 +108,7 @@
     "name": "abc",
     "price": 50,
     "stock": 80,
-    "category": "Electrónica",
+    "categoryId": "cat1",
     "description": "abc"
   },
   {
@@ -116,7 +116,7 @@
     "name": "ProductoNuevo15",
     "price": 50,
     "stock": 26,
-    "category": "Electrónica",
+    "categoryId": "cat1",
     "description": "Prueba Actualizacion ventana"
   }
 ]

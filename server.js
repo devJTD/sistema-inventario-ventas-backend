@@ -114,7 +114,14 @@ app.get('/api/products/:id', authenticateToken, (req, res) => {
 
 app.post('/api/products', authenticateToken, (req, res) => {
   const products = readJSONFile('products.json');
+  const categories = readJSONFile('categories.json'); // Leer categorías para validación
   const newProductData = req.body;
+
+  // Validar que la categoryId exista
+  if (!newProductData.categoryId || !categories.some(c => c.id === newProductData.categoryId)) {
+    return res.status(400).json({ message: 'ID de categoría inválido o no proporcionado.' });
+  }
+
   const newId = `prod${products.length > 0 ? Math.max(...products.map(p => parseInt(p.id.replace('prod', '')))) + 1 : 1}`;
   const newProduct = {
     id: newId,
@@ -127,12 +134,17 @@ app.post('/api/products', authenticateToken, (req, res) => {
 
 app.put('/api/products/:id', authenticateToken, (req, res) => {
   let products = readJSONFile('products.json');
+  const categories = readJSONFile('categories.json'); // Leer categorías para validación
   const productId = req.params.id;
   const updatedProductData = req.body;
 
   const productIndex = products.findIndex(p => p.id === productId);
 
   if (productIndex !== -1) {
+    // Validar que la categoryId exista si se proporciona
+    if (updatedProductData.categoryId && !categories.some(c => c.id === updatedProductData.categoryId)) {
+      return res.status(400).json({ message: 'ID de categoría inválido.' });
+    }
     products[productIndex] = { ...products[productIndex], ...updatedProductData };
     writeJSONFile('products.json', products);
     res.status(200).json(products[productIndex]);
@@ -413,6 +425,84 @@ app.delete('/api/users_management/:id', authenticateToken, (req, res) => {
     res.status(204).send();
   } else {
     res.status(404).json({ message: 'Usuario no encontrado para eliminar' });
+  }
+});
+
+/* Rutas para Categorías */
+app.get('/api/categories', authenticateToken, (req, res) => {
+  const categories = readJSONFile('categories.json');
+  res.status(200).json(categories);
+});
+
+app.get('/api/categories/:id', authenticateToken, (req, res) => {
+  const categories = readJSONFile('categories.json');
+  const category = categories.find(c => c.id === req.params.id);
+  if (category) {
+    res.status(200).json(category);
+  } else {
+    res.status(404).json({ message: 'Categoría no encontrada' });
+  }
+});
+
+app.post('/api/categories', authenticateToken, (req, res) => {
+  const categories = readJSONFile('categories.json');
+  const newCategoryData = req.body;
+
+  if (!newCategoryData.name) {
+    return res.status(400).json({ message: 'El nombre de la categoría es obligatorio.' });
+  }
+  if (categories.some(c => c.name.toLowerCase() === newCategoryData.name.toLowerCase())) {
+    return res.status(400).json({ message: 'Ya existe una categoría con ese nombre.' });
+  }
+
+  const newId = `cat${categories.length > 0 ? Math.max(...categories.map(c => parseInt(c.id.replace('cat', '')))) + 1 : 1}`;
+  const newCategory = {
+    id: newId,
+    ...newCategoryData
+  };
+  categories.push(newCategory);
+  writeJSONFile('categories.json', categories);
+  res.status(201).json(newCategory);
+});
+
+app.put('/api/categories/:id', authenticateToken, (req, res) => {
+  let categories = readJSONFile('categories.json');
+  const categoryId = req.params.id;
+  const updatedCategoryData = req.body;
+
+  const categoryIndex = categories.findIndex(c => c.id === categoryId);
+
+  if (categoryIndex !== -1) {
+    if (updatedCategoryData.name && categories.some((c, i) => c.name.toLowerCase() === updatedCategoryData.name.toLowerCase() && i !== categoryIndex)) {
+      return res.status(400).json({ message: 'Ya existe otra categoría con ese nombre.' });
+    }
+    categories[categoryIndex] = { ...categories[categoryIndex], ...updatedCategoryData };
+    writeJSONFile('categories.json', categories);
+    res.status(200).json(categories[categoryIndex]);
+  } else {
+    res.status(404).json({ message: 'Categoría no encontrada para actualizar' });
+  }
+});
+
+app.delete('/api/categories/:id', authenticateToken, (req, res) => {
+  let categories = readJSONFile('categories.json');
+  const categoryId = req.params.id;
+
+  // Verificar si hay productos asociados a esta categoría antes de eliminar
+  const products = readJSONFile('products.json');
+  const productsInCategory = products.filter(p => p.categoryId === categoryId); // Usar categoryId aquí
+  if (productsInCategory.length > 0) {
+    return res.status(400).json({ message: 'No se puede eliminar la categoría porque tiene productos asociados.' });
+  }
+
+  const initialLength = categories.length;
+  categories = categories.filter(c => c.id !== categoryId);
+
+  if (categories.length < initialLength) {
+    writeJSONFile('categories.json', categories);
+    res.status(204).send();
+  } else {
+    res.status(404).json({ message: 'Categoría no encontrada para eliminar' });
   }
 });
 

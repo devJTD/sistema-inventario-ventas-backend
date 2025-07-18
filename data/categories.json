@@ -1,0 +1,22 @@
+[
+  {
+    "id": "cat1",
+    "name": "Electrónica",
+    "description": "Dispositivos electrónicos y gadgets."
+  },
+  {
+    "id": "cat2",
+    "name": "Ropa",
+    "description": "Prendas de vestir y accesorios."
+  },
+  {
+    "id": "cat3",
+    "name": "Alimentos",
+    "description": "Productos comestibles y bebidas."
+  },
+  {
+    "id": "cat4",
+    "name": "Hogar",
+    "description": "Artículos para el hogar y limpieza."
+  }
+]
