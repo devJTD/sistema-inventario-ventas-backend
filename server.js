@@ -506,6 +506,54 @@ app.delete('/api/categories/:id', authenticateToken, (req, res) => {
   }
 });
 
+/* RUTA PARA PRODUCTOS MÁS VENDIDOS */
+app.get('/api/sales/top-products', authenticateToken, (req, res) => {
+    const sales = readJSONFile('sales.json');
+    const products = readJSONFile('products.json');
+    const period = req.query.period || 'last30days'; // Por defecto, últimos 30 días
+
+    let filteredSales = sales;
+    const now = new Date();
+
+    if (period === 'last30days') {
+        const thirtyDaysAgo = new Date();
+        thirtyDaysAgo.setDate(now.getDate() - 30);
+        filteredSales = sales.filter(sale => new Date(sale.date) >= thirtyDaysAgo);
+    } else if (period === 'last7days') {
+        const sevenDaysAgo = new Date();
+        sevenDaysAgo.setDate(now.getDate() - 7);
+        filteredSales = sales.filter(sale => new Date(sale.date) >= sevenDaysAgo);
+    }
+    // Si period es 'all' o cualquier otro valor, filteredSales se mantiene como todas las ventas
+
+    const productSales = {}; // { productId: totalQuantitySold }
+
+    filteredSales.forEach(sale => {
+        sale.items.forEach(item => {
+            if (productSales[item.productId]) {
+                productSales[item.productId] += item.quantity;
+            } else {
+                productSales[item.productId] = item.quantity;
+            }
+        });
+    });
+
+    const topProducts = Object.keys(productSales)
+        .map(productId => {
+            const product = products.find(p => p.id === productId);
+            return {
+                productId: productId,
+                name: product ? product.name : 'Producto Desconocido',
+                totalQuantitySold: productSales[productId]
+            };
+        })
+        .sort((a, b) => b.totalQuantitySold - a.totalQuantitySold)
+        .slice(0, 5); // Limitar a los 5 productos más vendidos
+
+    res.status(200).json(topProducts);
+});
+
+
 /* Inicio del Servidor */
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en http://localhost:${PORT}`);

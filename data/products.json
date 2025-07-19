@@ -1,122 +1,162 @@
 [
   {
     "id": "prod1",
-    "name": "Laptop Ultrabook",
-    "price": 1250,
-    "stock": 15,
+    "name": "Cargador USB Universal",
+    "price": 15.99,
+    "stock": 50,
     "categoryId": "cat1",
-    "description": "Portátil de alto rendimiento para trabajo y estudio."
+    "description": "Cargador rápido compatible con la mayoría de dispositivos móviles."
   },
   {
     "id": "prod2",
-    "name": "Auriculares Bluetooth",
-    "price": 85.5,
-    "stock": 40,
+    "name": "Audífonos Inalámbricos",
+    "price": 49.99,
+    "stock": 30,
     "categoryId": "cat1",
-    "description": "Auriculares inalámbricos con cancelación de ruido."
+    "description": "Audífonos Bluetooth con sonido de alta fidelidad y batería duradera."
   },
   {
     "id": "prod3",
-    "name": "Mouse Óptico Inalámbrico",
-    "price": 30,
-    "stock": 70,
+    "name": "Cable HDMI 2 Metros",
+    "price": 8.50,
+    "stock": 100,
     "categoryId": "cat1",
-    "description": "Ratón ergonómico con alta precisión."
+    "description": "Cable de alta velocidad para conexión de audio y video."
   },
   {
     "id": "prod4",
-    "name": "Camisa Casual Hombre",
-    "price": 45,
-    "stock": 60,
+    "name": "Camiseta Algodón Blanca",
+    "price": 12.00,
+    "stock": 80,
     "categoryId": "cat2",
-    "description": "Camisa de algodón 100% para uso diario."
+    "description": "Camiseta básica de algodón 100%, ideal para uso diario."
   },
   {
     "id": "prod5",
-    "name": "Jean Slim Fit Mujer",
-    "price": 70,
-    "stock": 35,
+    "name": "Calcetines Deportivos (3 pares)",
+    "price": 9.50,
+    "stock": 75,
     "categoryId": "cat2",
-    "description": "Jean de mezclilla elástica, corte ajustado."
+    "description": "Calcetines transpirables para actividades deportivas."
   },
   {
     "id": "prod6",
-    "name": "Zapatillas Deportivas",
-    "price": 110,
-    "stock": 25,
+    "name": "Pantalón Vaquero Clásico",
+    "price": 35.00,
+    "stock": 40,
     "categoryId": "cat2",
-    "description": "Calzado deportivo ligero y transpirable."
+    "description": "Jean de corte recto, cómodo y duradero."
   },
   {
     "id": "prod7",
-    "name": "Arroz Extra Grano Largo (5kg)",
-    "price": 18.5,
-    "stock": 120,
+    "name": "Manzanas Rojas (1kg)",
+    "price": 3.20,
+    "stock": 150,
     "categoryId": "cat3",
-    "description": "Arroz de alta calidad, ideal para todo tipo de comidas."
+    "description": "Manzanas frescas y crujientes, ideales para snack."
   },
   {
     "id": "prod8",
-    "name": "Leche Fresca Entera (1L)",
-    "price": 5.2,
-    "stock": 90,
+    "name": "Pechuga de Pollo Fresca (500g)",
+    "price": 6.80,
+    "stock": 60,
     "categoryId": "cat3",
-    "description": "Leche pasteurizada y homogeneizada."
+    "description": "Pechuga de pollo sin hueso ni piel, lista para cocinar."
   },
   {
     "id": "prod9",
-    "name": "Pan de Molde Integral",
-    "price": 8.9,
-    "stock": 50,
+    "name": "Yogur Natural Desnatado (pack 4)",
+    "price": 2.75,
+    "stock": 90,
     "categoryId": "cat3",
-    "description": "Pan suave con alto contenido de fibra."
+    "description": "Yogur cremoso y saludable, sin azúcares añadidos."
   },
   {
     "id": "prod10",
-    "name": "Detergente Líquido (3L)",
-    "price": 32,
-    "stock": 29,
+    "name": "Limpiador Multiusos (1L)",
+    "price": 4.10,
+    "stock": 70,
     "categoryId": "cat4",
-    "description": "Detergente concentrado para ropa, con fragancia floral."
+    "description": "Limpiador eficaz para todas las superficies del hogar."
   },
   {
     "id": "prod11",
-    "name": "Escoba de Cerdas Suaves",
-    "price": 15,
-    "stock": 20,
+    "name": "Bolsas de Basura Grandes (20 uds)",
+    "price": 5.00,
+    "stock": 85,
     "categoryId": "cat4",
-    "description": "Escoba ligera y eficiente para limpieza de interiores."
+    "description": "Bolsas resistentes con cierre fácil para la basura."
   },
   {
     "id": "prod12",
-    "name": "Bombilla LED E27 (9W)",
-    "price": 7.5,
-    "stock": 80,
-    "categoryId": "cat4",
-    "description": "Bombilla de bajo consumo, luz cálida."
+    "name": "Agua Mineral (6x1.5L)",
+    "price": 3.90,
+    "stock": 110,
+    "categoryId": "cat5",
+    "description": "Paquete de 6 botellas de agua mineral natural."
   },
   {
     "id": "prod13",
-    "name": "Papel Higienico",
-    "price": 10,
-    "stock": 47,
-    "categoryId": "cat4",
-    "description": "Papel Noble"
+    "name": "Refresco Cola (2L)",
+    "price": 2.20,
+    "stock": 95,
+    "categoryId": "cat5",
+    "description": "Bebida refrescante de cola, tamaño familiar."
   },
   {
     "id": "prod14",
-    "name": "abc",
-    "price": 50,
-    "stock": 80,
-    "categoryId": "cat1",
-    "description": "abc"
+    "name": "Champú Reparador (400ml)",
+    "price": 7.30,
+    "stock": 65,
+    "categoryId": "cat6",
+    "description": "Champú para cabello dañado, con queratina y vitaminas."
   },
   {
     "id": "prod15",
-    "name": "ProductoNuevo15",
-    "price": 50,
-    "stock": 26,
-    "categoryId": "cat1",
-    "description": "Prueba Actualizacion ventana"
+    "name": "Pasta Dental Blanqueadora",
+    "price": 3.80,
+    "stock": 120,
+    "categoryId": "cat6",
+    "description": "Pasta dental que ayuda a blanquear los dientes y proteger el esmalte."
+  },
+  {
+    "id": "prod16",
+    "name": "Pizza Congelada Cuatro Quesos",
+    "price": 5.50,
+    "stock": 45,
+    "categoryId": "cat7",
+    "description": "Pizza lista para hornear con una deliciosa mezcla de quesos."
+  },
+  {
+    "id": "prod17",
+    "name": "Helado de Vainilla (1L)",
+    "price": 6.90,
+    "stock": 35,
+    "categoryId": "cat7",
+    "description": "Cremoso helado de vainilla, perfecto para postres."
+  },
+  {
+    "id": "prod18",
+    "name": "Pan de Molde Blanco",
+    "price": 2.10,
+    "stock": 100,
+    "categoryId": "cat8",
+    "description": "Pan suave y esponjoso, ideal para sándwiches."
+  },
+  {
+    "id": "prod19",
+    "name": "Galletas de Avena y Pasas",
+    "price": 3.00,
+    "stock": 80,
+    "categoryId": "cat8",
+    "description": "Galletas caseras con avena y pasas, fuente de fibra."
+  },
+  {
+    "id": "prod20",
+    "name": "Alimento Seco para Perros (3kg)",
+    "price": 18.00,
+    "stock": 25,
+    "categoryId": "cat9",
+    "description": "Alimento balanceado para perros adultos de todas las razas."
   }
 ]

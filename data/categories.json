@@ -2,21 +2,51 @@
   {
     "id": "cat1",
     "name": "Electrónica",
-    "description": "Dispositivos electrónicos y gadgets."
+    "description": "Dispositivos electrónicos menores y gadgets."
   },
   {
     "id": "cat2",
     "name": "Ropa",
-    "description": "Prendas de vestir y accesorios."
+    "description": "Prendas de vestir básicas y accesorios."
   },
   {
     "id": "cat3",
-    "name": "Alimentos",
-    "description": "Productos comestibles y bebidas."
+    "name": "Alimentos Frescos",
+    "description": "Frutas, verduras, carnes, lácteos y panadería."
   },
   {
     "id": "cat4",
-    "name": "Hogar",
-    "description": "Artículos para el hogar y limpieza."
+    "name": "Hogar y Limpieza",
+    "description": "Artículos para el hogar, limpieza y mantenimiento."
+  },
+  {
+    "id": "cat5",
+    "name": "Bebidas",
+    "description": "Aguas, refrescos, jugos, bebidas alcohólicas y no alcohólicas."
+  },
+  {
+    "id": "cat6",
+    "name": "Cuidado Personal",
+    "description": "Productos de higiene, belleza y salud personal."
+  },
+  {
+    "id": "cat7",
+    "name": "Congelados",
+    "description": "Alimentos congelados, helados y comidas preparadas."
+  },
+  {
+    "id": "cat8",
+    "name": "Panadería y Repostería",
+    "description": "Pan fresco, pasteles, galletas y bollería."
+  },
+  {
+    "id": "cat9",
+    "name": "Mascotas",
+    "description": "Alimentos, accesorios y productos de cuidado para mascotas."
+  },
+  {
+    "id": "cat10",
+    "name": "Snacks y Dulces",
+    "description": "Papas fritas, galletas, chocolates, caramelos y confitería."
   }
 ]

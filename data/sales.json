@@ -6,65 +6,403 @@
     "items": [
       {
         "productId": "prod1",
-        "name": "Laptop Ultrabook",
+        "name": "Cargador USB Universal",
         "quantity": 1,
-        "price": 1250
-      },
-      {
-        "productId": "prod3",
-        "name": "Mouse Óptico Inalámbrico",
-        "quantity": 2,
-        "price": 30
-      }
-    ],
-    "total": 1310
-  },
-  {
-    "id": "sale2",
-    "date": "2025-07-01T11:15:00.000Z",
-    "clientId": "cli4",
-    "items": [
-      {
-        "productId": "prod5",
-        "name": "Jean Slim Fit Mujer",
-        "quantity": 1,
-        "price": 70
+        "price": 15.99
       },
       {
         "productId": "prod10",
-        "name": "Detergente Líquido (3L)",
-        "quantity": 1,
-        "price": 32
+        "name": "Limpiador Multiusos (1L)",
+        "quantity": 2,
+        "price": 4.10
       }
     ],
-    "total": 102
+    "total": 24.19
+  },
+  {
+    "id": "sale2",
+    "date": "2025-07-02T11:15:00.000Z",
+    "clientId": "cli2",
+    "items": [
+      {
+        "productId": "prod7",
+        "name": "Manzanas Rojas (1kg)",
+        "quantity": 3,
+        "price": 3.20
+      },
+      {
+        "productId": "prod12",
+        "name": "Agua Mineral (6x1.5L)",
+        "quantity": 1,
+        "price": 3.90
+      }
+    ],
+    "total": 13.50
   },
   {
     "id": "sale3",
-    "date": "2025-07-11T22:15:51.843Z",
+    "date": "2025-07-03T14:00:00.000Z",
+    "clientId": "cli3",
+    "items": [
+      {
+        "productId": "prod15",
+        "name": "Pasta Dental Blanqueadora",
+        "quantity": 2,
+        "price": 3.80
+      },
+      {
+        "productId": "prod10",
+        "name": "Limpiador Multiusos (1L)",
+        "quantity": 1,
+        "price": 4.10
+      }
+    ],
+    "total": 11.70
+  },
+  {
+    "id": "sale4",
+    "date": "2025-07-04T09:45:00.000Z",
+    "clientId": "cli4",
+    "items": [
+      {
+        "productId": "prod4",
+        "name": "Camiseta Algodón Blanca",
+        "quantity": 1,
+        "price": 12.00
+      },
+      {
+        "productId": "prod18",
+        "name": "Pan de Molde Blanco",
+        "quantity": 2,
+        "price": 2.10
+      }
+    ],
+    "total": 16.20
+  },
+  {
+    "id": "sale5",
+    "date": "2025-07-05T16:20:00.000Z",
+    "clientId": "cli1",
+    "items": [
+      {
+        "productId": "prod7",
+        "name": "Manzanas Rojas (1kg)",
+        "quantity": 2,
+        "price": 3.20
+      },
+      {
+        "productId": "prod12",
+        "name": "Agua Mineral (6x1.5L)",
+        "quantity": 2,
+        "price": 3.90
+      },
+      {
+        "productId": "prod10",
+        "name": "Limpiador Multiusos (1L)",
+        "quantity": 1,
+        "price": 4.10
+      }
+    ],
+    "total": 17.50
+  },
+  {
+    "id": "sale6",
+    "date": "2025-07-06T13:10:00.000Z",
+    "clientId": "cli5",
+    "items": [
+      {
+        "productId": "prod8",
+        "name": "Pechuga de Pollo Fresca (500g)",
+        "quantity": 1,
+        "price": 6.80
+      },
+      {
+        "productId": "prod13",
+        "name": "Refresco Cola (2L)",
+        "quantity": 3,
+        "price": 2.20
+      }
+    ],
+    "total": 13.40
+  },
+  {
+    "id": "sale7",
+    "date": "2025-07-07T10:00:00.000Z",
+    "clientId": "cli6",
+    "items": [
+      {
+        "productId": "prod15",
+        "name": "Pasta Dental Blanqueadora",
+        "quantity": 3,
+        "price": 3.80
+      },
+      {
+        "productId": "prod19",
+        "name": "Galletas de Avena y Pasas",
+        "quantity": 1,
+        "price": 3.00
+      }
+    ],
+    "total": 14.40
+  },
+  {
+    "id": "sale8",
+    "date": "2025-07-08T15:30:00.000Z",
+    "clientId": "cli2",
+    "items": [
+      {
+        "productId": "prod10",
+        "name": "Limpiador Multiusos (1L)",
+        "quantity": 2,
+        "price": 4.10
+      },
+      {
+        "productId": "prod11",
+        "name": "Bolsas de Basura Grandes (20 uds)",
+        "quantity": 1,
+        "price": 5.00
+      }
+    ],
+    "total": 13.20
+  },
+  {
+    "id": "sale9",
+    "date": "2025-07-09T11:00:00.000Z",
+    "clientId": "cli3",
+    "items": [
+      {
+        "productId": "prod7",
+        "name": "Manzanas Rojas (1kg)",
+        "quantity": 4,
+        "price": 3.20
+      },
+      {
+        "productId": "prod12",
+        "name": "Agua Mineral (6x1.5L)",
+        "quantity": 1,
+        "price": 3.90
+      }
+    ],
+    "total": 16.70
+  },
+  {
+    "id": "sale10",
+    "date": "2025-07-10T17:45:00.000Z",
+    "clientId": "cli4",
+    "items": [
+      {
+        "productId": "prod18",
+        "name": "Pan de Molde Blanco",
+        "quantity": 3,
+        "price": 2.10
+      },
+      {
+        "productId": "prod9",
+        "name": "Yogur Natural Desnatado (pack 4)",
+        "quantity": 1,
+        "price": 2.75
+      }
+    ],
+    "total": 9.05
+  },
+  {
+    "id": "sale11",
+    "date": "2025-07-11T08:30:00.000Z",
+    "clientId": "cli1",
+    "items": [
+      {
+        "productId": "prod10",
+        "name": "Limpiador Multiusos (1L)",
+        "quantity": 3,
+        "price": 4.10
+      }
+    ],
+    "total": 12.30
+  },
+  {
+    "id": "sale12",
+    "date": "2025-07-12T14:15:00.000Z",
+    "clientId": "cli5",
+    "items": [
+      {
+        "productId": "prod15",
+        "name": "Pasta Dental Blanqueadora",
+        "quantity": 2,
+        "price": 3.80
+      },
+      {
+        "productId": "prod6",
+        "name": "Pantalón Vaquero Clásico",
+        "quantity": 1,
+        "price": 35.00
+      }
+    ],
+    "total": 42.60
+  },
+  {
+    "id": "sale13",
+    "date": "2025-07-13T11:50:00.000Z",
+    "clientId": "cli6",
+    "items": [
+      {
+        "productId": "prod7",
+        "name": "Manzanas Rojas (1kg)",
+        "quantity": 2,
+        "price": 3.20
+      },
+      {
+        "productId": "prod12",
+        "name": "Agua Mineral (6x1.5L)",
+        "quantity": 2,
+        "price": 3.90
+      }
+    ],
+    "total": 14.20
+  },
+  {
+    "id": "sale14",
+    "date": "2025-07-14T09:00:00.000Z",
+    "clientId": "cli2",
+    "items": [
+      {
+        "productId": "prod13",
+        "name": "Refresco Cola (2L)",
+        "quantity": 4,
+        "price": 2.20
+      }
+    ],
+    "total": 8.80
+  },
+  {
+    "id": "sale15",
+    "date": "2025-07-15T18:00:00.000Z",
     "clientId": "cli3",
     "items": [
       {
         "productId": "prod10",
-        "name": "Detergente Líquido (3L)",
+        "name": "Limpiador Multiusos (1L)",
         "quantity": 1,
-        "price": 32
+        "price": 4.10
+      },
+      {
+        "productId": "prod18",
+        "name": "Pan de Molde Blanco",
+        "quantity": 1,
+        "price": 2.10
+      },
+      {
+        "productId": "prod8",
+        "name": "Pechuga de Pollo Fresca (500g)",
+        "quantity": 1,
+        "price": 6.80
       }
     ],
-    "total": 32
+    "total": 13.00
   },
   {
-    "id": "sale4",
-    "date": "2025-07-12T13:06:46.941Z",
+    "id": "sale16",
+    "date": "2025-07-16T10:40:00.000Z",
+    "clientId": "cli4",
+    "items": [
+      {
+        "productId": "prod15",
+        "name": "Pasta Dental Blanqueadora",
+        "quantity": 1,
+        "price": 3.80
+      },
+      {
+        "productId": "prod7",
+        "name": "Manzanas Rojas (1kg)",
+        "quantity": 5,
+        "price": 3.20
+      }
+    ],
+    "total": 19.80
+  },
+  {
+    "id": "sale17",
+    "date": "2025-07-17T12:05:00.000Z",
+    "clientId": "cli1",
+    "items": [
+      {
+        "productId": "prod12",
+        "name": "Agua Mineral (6x1.5L)",
+        "quantity": 3,
+        "price": 3.90
+      },
+      {
+        "productId": "prod13",
+        "name": "Refresco Cola (2L)",
+        "quantity": 2,
+        "price": 2.20
+      }
+    ],
+    "total": 16.10
+  },
+  {
+    "id": "sale18",
+    "date": "2025-07-18T09:15:00.000Z",
+    "clientId": "cli5",
+    "items": [
+      {
+        "productId": "prod10",
+        "name": "Limpiador Multiusos (1L)",
+        "quantity": 2,
+        "price": 4.10
+      },
+      {
+        "productId": "prod18",
+        "name": "Pan de Molde Blanco",
+        "quantity": 2,
+        "price": 2.10
+      }
+    ],
+    "total": 12.40
+  },
+  {
+    "id": "sale19",
+    "date": "2025-07-18T14:30:00.000Z",
     "clientId": "cli6",
     "items": [
       {
-        "productId": "prod13",
-        "name": "Papel Higienico",
+        "productId": "prod7",
+        "name": "Manzanas Rojas (1kg)",
         "quantity": 3,
-        "price": 10
+        "price": 3.20
+      },
+      {
+        "productId": "prod15",
+        "name": "Pasta Dental Blanqueadora",
+        "quantity": 1,
+        "price": 3.80
       }
     ],
-    "total": 30
+    "total": 13.40
+  },
+  {
+    "id": "sale20",
+    "date": "2025-07-18T16:00:00.000Z",
+    "clientId": "cli1",
+    "items": [
+      {
+        "productId": "prod12",
+        "name": "Agua Mineral (6x1.5L)",
+        "quantity": 1,
+        "price": 3.90
+      },
+      {
+        "productId": "prod13",
+        "name": "Refresco Cola (2L)",
+        "quantity": 1,
+        "price": 2.20
+      },
+      {
+        "productId": "prod10",
+        "name": "Limpiador Multiusos (1L)",
+        "quantity": 1,
+        "price": 4.10
+      }
+    ],
+    "total": 10.20
   }
 ]
